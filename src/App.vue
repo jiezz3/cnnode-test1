@@ -10,10 +10,9 @@
 
 <script>
 import Header from "./components/Header1.vue";
-import PostList from "./components/PostList.vue";
 
 export default {
-  components: { Header, PostList },
+  components: { Header },
 };
 </script>
 
