@@ -1,8 +1,15 @@
 <template>
   <div class="header">
-    <img src="//static2.cnodejs.org/public/images/cnodejs_light.svg" />
+    <a href="/">
+      <div class="img">
+        <img
+          src="//static2.cnodejs.org/public/images/cnodejs_light.svg"
+          alt=""
+        />
+      </div>
+    </a>
     <ul>
-      <li><a href="#">首页</a></li>
+      <li><a href="/">首页</a></li>
       <li><a href="#">新手入门</a></li>
       <li><a href="#">API</a></li>
       <li><a href="#">关于</a></li>
@@ -28,8 +35,8 @@ a {
   text-shadow: nonr;
 }
 img {
-  max-width: 120px;
-  margin-left: 50px;
+  width: 120px;
+  margin-left: 100px;
 }
 .header {
   background: rgb(68, 68, 68);

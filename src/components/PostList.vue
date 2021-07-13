@@ -35,20 +35,31 @@
               {{ tabFormatter(post) }}
             </span>
           </span>
-          <span class="title">{{ post.title }}</span>
+          <router-link
+            :to="{
+              name: 'post_content',
+              params: { id: post.id, name: post.author.loginname },
+            }"
+          >
+            <span class="title">{{ post.title }}</span>
+          </router-link>
           <span class="last_reply"> {{ formatDate(post.last_reply_at) }}</span>
         </li>
+        <li class="btn"><PageBtn @handleList="renderList" /></li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import PageBtn from "./PageBtn.vue";
 export default {
+  components: { PageBtn },
   data() {
     return {
       isLoading: false,
       posts: [],
+      postpage: 1,
     };
   },
   computed: {
@@ -91,13 +102,26 @@ export default {
         }
       };
     },
+    // ellipsis() {
+    //   return function (value) {
+    //     if (value.length > 40) {
+    //       return value.slice(0, 40) + "...";
+    //     } else return value;
+    //   };
+    // },
   },
   methods: {
+    renderList(value) {
+      this.postpage = value;
+      this.getData();
+    },
     getData() {
       this.$http
         .get(" https://cnodejs.org/api/v1/topics", {
-          page: 1,
-          limit: 20,
+          params: {
+            page: this.postpage,
+            limit: 20,
+          },
         })
         .then((res) => {
           this.posts = res.data.data;
@@ -158,7 +182,12 @@ ul li:not(:first-child) {
 }
 .title {
   margin-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 70%;
 }
+
 .put_good,
 .put_top {
   background: #80bd01;
@@ -211,5 +240,17 @@ ul li:not(:first-child) {
   background-color: #80bd01;
   padding: 0 5px;
   border-radius: 5px;
+}
+.router-link-active {
+  text-decoration: none;
+  color: yellow;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+.btn {
+  display: flex;
+  justify-content: center;
 }
 </style>
